@@ -1,11 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://cmit2kuxkf6n2"]
+[gd_scene load_steps=16 format=3 uid="uid://cmit2kuxkf6n2"]
 
+[ext_resource type="Script" path="res://scenes/game_manager.gd" id="1_e18ou"]
 [ext_resource type="PackedScene" uid="uid://m8fmh068j86m" path="res://scenes/player.tscn" id="1_f5nhn"]
+[ext_resource type="FontFile" uid="uid://nlbsip6kl74s" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="2_7y0fm"]
 [ext_resource type="Texture2D" uid="uid://b1s3lmq2icvf3" path="res://assets/sprites/world_tileset.png" id="2_shiuh"]
 [ext_resource type="PackedScene" uid="uid://dn2kvqm7wonbo" path="res://scenes/platform.tscn" id="3_blm0h"]
 [ext_resource type="PackedScene" uid="uid://dpsvkqqo6lh2i" path="res://scenes/enemy.tscn" id="3_e652h"]
 [ext_resource type="PackedScene" uid="uid://bmnp6uihj8w8r" path="res://scenes/coin.tscn" id="4_xhn6i"]
 [ext_resource type="PackedScene" uid="uid://bgt277supchyt" path="res://scenes/killzone.tscn" id="5_fdgw2"]
+[ext_resource type="FontFile" uid="uid://b8m858gicjnyi" path="res://assets/fonts/PixelOperator8.ttf" id="7_mukg5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w55gj"]
 texture = ExtResource("2_shiuh")
@@ -450,6 +453,19 @@ _data = {
 
 [node name="Game" type="Node2D"]
 
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_e18ou")
+
+[node name="num_coins" type="Label" parent="GameManager"]
+offset_left = 162.0
+offset_top = -60.0
+offset_right = 222.0
+offset_bottom = -37.0
+theme_override_fonts/font = ExtResource("2_7y0fm")
+theme_override_font_sizes/font_size = 8
+text = "Kupunya 0 coins"
+
 [node name="Player" parent="." instance=ExtResource("1_f5nhn")]
 position = Vector2(-4, -5)
 
@@ -468,13 +484,13 @@ layer_0/tile_data = PackedInt32Array(131064, 0, 15, 131065, 0, 15, 131066, 0, 15
 layer_1/name = "mid"
 layer_1/tile_data = PackedInt32Array(65534, 0, 0, 131070, 0, 1, 131069, 0, 1, 131071, 0, 1, 65536, 0, 1, 65537, 0, 1, 65538, 0, 1, 65535, 0, 0, 0, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 65533, 0, 0, 65532, 0, 0, 65531, 0, 0, 65530, 0, 0, 131066, 0, 1, 131065, 0, 1, 196601, 0, 1, 196602, 0, 1, 196603, 0, 1, 196604, 0, 1, 131068, 0, 1, 131067, 0, 1, 65539, 0, 1, 65540, 0, 1, 65541, 0, 1, 131076, 0, 1, 131075, 0, 1, 131074, 0, 1, 131073, 0, 1, 131072, 0, 1, 196607, 0, 1, 196606, 0, 1, 196605, 0, 1, 65529, 0, 0, -262135, 0, 0, -131069, 131072, 8, -65533, 131072, 8, -262141, 131072, 4, -65531, 65536, 1, 131064, 65536, 1, 7, 65536, 0, 9, 65536, 0, 8, 65536, 1, 65543, 65536, 1, 65545, 65536, 1, 65544, 65536, 0, -262136, 720896, 0, -262137, 655360, 0, -262138, 589824, 0, -262139, 0, 0, -4, 0, 0, -196614, 0, 0, -262146, 0, 0, -262145, 0, 0, -327680, 0, 0, -327679, 0, 0, -327676, 0, 0, -262140, 0, 1, -65541, 0, 1, 17, 65536, 0, 18, 65536, 0, 19, 65536, 0, 20, 65536, 0, 22, 65536, 0, 23, 65536, 0, 24, 65536, 0, 21, 65536, 0, 65557, 65536, 0, 65556, 65536, 0, 65555, 65536, 0, 65554, 65536, 0, 65553, 65536, 0)
 
-[node name="AnimatableBody2D" parent="." instance=ExtResource("3_blm0h")]
+[node name="platform2" parent="." instance=ExtResource("3_blm0h")]
 position = Vector2(-27, -39)
 
-[node name="AnimatableBody2D2" parent="." instance=ExtResource("3_blm0h")]
+[node name="platform" parent="." instance=ExtResource("3_blm0h")]
 position = Vector2(176, 5)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D2"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="platform"]
 libraries = {
 "": SubResource("AnimationLibrary_cr3kj")
 }
@@ -510,8 +526,33 @@ position = Vector2(92, -71)
 [node name="Coin3" parent="Coins" instance=ExtResource("4_xhn6i")]
 position = Vector2(94, -22)
 
-[node name="Node2D" parent="." instance=ExtResource("3_e652h")]
+[node name="enemies" type="Node" parent="."]
+
+[node name="Node2D2" parent="enemies" instance=ExtResource("3_e652h")]
+position = Vector2(120, -12)
+
+[node name="Node2D" parent="enemies" instance=ExtResource("3_e652h")]
 position = Vector2(12, -12)
 
-[node name="Node2D2" parent="." instance=ExtResource("3_e652h")]
-position = Vector2(120, -12)
+[node name="labels" type="Node" parent="."]
+
+[node name="Label2" type="Label" parent="labels"]
+offset_left = 109.0
+offset_top = -23.0
+offset_right = 219.0
+offset_bottom = -4.0
+theme_override_fonts/font = ExtResource("7_mukg5")
+theme_override_font_sizes/font_size = 8
+text = "jangan pakai teks
+dalam game2"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="labels"]
+offset_left = -76.0
+offset_top = 7.0
+offset_right = 72.0
+offset_bottom = 42.0
+theme_override_fonts/font = ExtResource("7_mukg5")
+text = "Tekan space
+ntk loncat"
+horizontal_alignment = 1
